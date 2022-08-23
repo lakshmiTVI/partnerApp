@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { StyleSheet,  Text,  View,  Image,  TextInput,  TouchableOpacity,  Alert,  SafeAreaView} from "react-native";
- import {serverURL } from "../services/storageService";
 function Login({navigation}) {
-
-  const [email, setEmail] = useState("p.kishore");
+  global.serverURL="https://rpm.televital.net:60001/usvirtualdoctor/rest";
+  global.userObj={};
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("Televital@123");
 
   function loginSubmit()
   {
+    global.userObj={};
     if(!email || !password) Alert.alert("Error","Please enter User name and password",[{"text":"Ok"}])
     
     else if(email && password)                                                                                                                                             
     {
-      fetch(serverURL+'/auth', 
+      fetch(global.serverURL+'/auth', 
       {  method: 'POST',  
         headers: { Accept: 'application/json', 'Content-Type': 'application/json'  },
         body: JSON.stringify({ userId: email, password: password })}).then((response) => response.json())
@@ -23,10 +24,12 @@ function Login({navigation}) {
            if(json.status=="ok")
           {
     
+            global.userObj=json;
+            
             navigation.navigate('DashboardDrawerScreen', 
             {
               screen: 'Dashboard',
-              params: {userObj:json,},
+              params: {userObj:json},
             });
           }
       else   

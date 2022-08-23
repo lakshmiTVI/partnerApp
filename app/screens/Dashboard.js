@@ -1,11 +1,8 @@
 import React from 'react';
 import { SafeAreaView,StyleSheet,View,Text,StatusBar,TouchableOpacity,Alert } from 'react-native';
 import {useState,useEffect} from 'react';
-import {useRoute,} from '@react-navigation/native';
-import {serverURL } from "../services/storageService";
-import TVLibNativeModule from "../services/TVLibNativeModule";
-import { ActivityIndicator} from 'react-native';
-function Dashboard({ navigation }) {
+import {useIsFocused, useRoute,} from '@react-navigation/native';
+export default function Dashboard({ navigation }) {
 
     // ======================================== Variable DEclarations======================================
     const [tempValue,setTValue]= useState("N/A");
@@ -15,39 +12,43 @@ function Dashboard({ navigation }) {
     const [wtValue,setWTValue]= useState("N/A");
     const [spo2Value,setSPO2Value]= useState("N/A");
     const [pulseValue,setPULSEValue]= useState("N/A");
-    const [animating,toggleAnimating]=useState(false);
+    const MINUTE_MS = 30000;
     const route=useRoute();
     var loginObj=route.params.userObj;
+    const focus = useIsFocused();
 //    ================================================= Fuction Logic=====================================
 
-const MINUTE_MS = 30000;
 useEffect(() => {
+    if(focus)
+    {
     loadVitalData();
-
 
   const interval = setInterval(() => {
     loadVitalData();
   }, MINUTE_MS );
 
   return () => clearInterval(interval);
-}, [])
+
+}
+}, [focus])
 
 
- function loadVitalData()
+
+ const loadVitalData=()=>
  {
-    captureVitalData(1);
+   captureVitalData(1);
     captureVitalData(2);
     captureVitalData(3);
     captureVitalData(4);
     captureVitalData(5);
     captureVitalData(6);
-    captureVitalData(7);
     captureVitalData(8);
 
  }
-function captureVitalData(paramId)
+const  captureVitalData=(paramId)=>
 {
-    fetch(serverURL+'/getVitals?patientId='+loginObj.id+'&readingLimit=1&paramId='+paramId, 
+    console.log(paramId);
+    fetch(global.serverURL+'/getVitals?patientId='+loginObj.id+'&readingLimit=1&paramId='+paramId, 
       {  
         method: 'GET',  
         headers: { Accept: 'application/json', 'Content-Type': 'application/json','Authorization':"Bearer "+loginObj.token},})
@@ -55,37 +56,16 @@ function captureVitalData(paramId)
         {
           if(json.status=="ok")
           {
-          if(paramId==1){setTValue(json.data[0].paramvalue+"("+json.data[0].paramunit+")");}
-          else if(paramId==2){setWTValue(json.data[0].paramvalue+"("+json.data[0].paramunit+")");}
-          else if(paramId==3){setHTValue(json.data[0].paramvalue+"("+json.data[0].paramunit+")");}
-          else if(paramId==4){setBGValue(json.data[0].paramvalue+"("+json.data[0].paramunit+")");}
-          else if(paramId==5){setPULSEValue(json.data[0].paramvalue+"("+json.data[0].paramunit+")");}
-          else if(paramId==6){setSPO2Value(json.data[0].paramvalue+"("+json.data[0].paramunit+")");}
-          else if(paramId==8){setBPValue(json.data[0].paramvalue+"("+json.data[0].paramunit+")");}
+          if(paramId==1){setTValue(Math.round(json.data[0].paramvalue).toFixed(1)+" "+json.data[0].paramunit);console.log("called")}
+          else if(paramId==2){setWTValue(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
+          else if(paramId==3){setHTValue(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
+          else if(paramId==4){setBGValue(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
+          else if(paramId==5){setPULSEValue(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
+          else if(paramId==6){setSPO2Value(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
+          else if(paramId==8){setBPValue(json.data[0].paramvalue+" "+json.data[0].paramunit);}
           }
       })
       .catch((error) => {console.error(error);})
-}
-
-const configureTerra=()=>
-{
-    toggleAnimating(true);
-     
-    console.log("================Configuring Terra================");
-
-    console.log(TVLibNativeModule);
-    TVLibNativeModule.configureTerra(resp=>
-    {
-        toggleAnimating(false);
-        Alert.alert(resp)
-    });
-    
-    TVLibNativeModule.loginUser("Televital","Televital@123",resp=>{console.log("The Login User response is "+resp);});
-    TVLibNativeModule.loginUser("Tele","Televital@123",resp=>{console.log("The Login User response is "+resp);});
-
-    TVLibNativeModule.greetings(resp=>{console.log("The greetings response is "+resp);});
-    TVLibNativeModule.addEvent("Lakshmi","Hi",123,resp=>{console.log("The addEvent response is "+resp);});
-    
 }
 // ================================================ Frontend=======================================================
     return (
@@ -125,23 +105,12 @@ const configureTerra=()=>
             </View>
 
             <View style={styles.bottomRow} >
-            <TouchableOpacity style={styles.deviceBtn} onPress={() => navigation.navigate('DeviceList',{userObj:loginObj,})}>
-            <Text style={styles.deviceText}  >View Device List</Text>
+            <TouchableOpacity style={styles.deviceBtn} onPress={(loadVitalData)}>
+            <Text style={styles.deviceText}  >Refresh Readings</Text>
             </TouchableOpacity>
             </View>
 
-            <View style={styles.bottomRow} >
-            <TouchableOpacity style={styles.terraBtn} onPress={configureTerra}>
-            <Text style={styles.deviceText}  >Authenticate Terra</Text>
-            </TouchableOpacity>
-            </View>
-
-            <ActivityIndicator animating = {animating} color = '#bc2b78' size = "large" style = {styles.activityIndicator}/>
-            <View style={styles.bottomRow} >
-            <TouchableOpacity style={styles.footerBtn} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.deviceText}  >Logout</Text>
-            </TouchableOpacity>
-            </View>
+            
             
         </SafeAreaView>
         
@@ -225,31 +194,5 @@ const styles = StyleSheet.create({
             justifyContent:"center" ,
       },
 
-      footerBtn: {
-        position:"relative",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        top:50,
-        backgroundColor:'green',
-        alignItems:'center',
-        width: "50%",
-        borderRadius: 10,
-        height: 50,
-        justifyContent: "center",
-        marginTop: 40,
-        
-      },
-
-      terraBtn: {
-        width: "50%",
-        borderRadius: 10,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 40,
-        
-        backgroundColor: "#366cdb",
-      },
-})
-export default Dashboard;
+      
+});

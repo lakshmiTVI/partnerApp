@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { SafeAreaView,StyleSheet,View,Text,StatusBar,Button,TouchableOpacity ,FlatList} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {useState} from 'react';
-import {serverURL } from "../services/storageService";
 import { color } from 'react-native-reanimated';
 function DeviceList(props) {
     // ================================================Logic Part===================================================================
@@ -10,7 +9,7 @@ function DeviceList(props) {
     const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
     const [deviceDetailList,setValue]= useState([]);
     const route=useRoute();
-    var loginObj=route.params.userObj;
+    var loginObj=global.userObj;
     console.log(loginObj);
 
     useEffect(()=>{
@@ -19,7 +18,7 @@ function DeviceList(props) {
 
 function loadDeviceList()
 {
-    fetch(serverURL+'/devicedata/getPatientDevices?patientId='+loginObj.id, 
+    fetch(global.serverURL+'/devicedata/getPatientDevices?patientId='+loginObj.id, 
       {  method: 'GET',  
         headers: { 
             Accept: 'application/json', 
