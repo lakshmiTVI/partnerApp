@@ -26,11 +26,7 @@ import Terra from "./app/screens/Terra";
       return(
         <DrawerStack.Navigator>
           <DrawerStack.Screen name="Dashboard" component={Dashboard} 
-          options={{ headerShown:true,
-            // headerRight: () => (
-            //   <Button onPress={() => alert("Hi")}  title="click" />
-            // )
-          }} 
+          options={{ headerShown:true }} 
           ></DrawerStack.Screen>
           <DrawerStack.Screen name="DeviceList" component={DeviceList} ></DrawerStack.Screen>
           <DrawerStack.Screen name="Terra" component={Terra}></DrawerStack.Screen>

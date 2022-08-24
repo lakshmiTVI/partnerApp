@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet,  Text,  View,  Image,  TextInput,  TouchableOpacity,  Alert,  SafeAreaView} from "react-native";
+import TVLibNativeModule from "../services/TVLibNativeModule";
 function Login({navigation}) {
   global.serverURL="https://rpm.televital.net:60001/usvirtualdoctor/rest";
   global.userObj={};
-  const [email, setEmail] = useState("");
+  global.terraConfigureStatus=false;
+  const [email, setEmail] = useState("ram");
   const [password, setPassword] = useState("Televital@123");
 
   function loginSubmit()
@@ -13,24 +15,25 @@ function Login({navigation}) {
     
     else if(email && password)                                                                                                                                             
     {
+      console.log("{'New Login':{Username:"+email+", Password:"+password+"}}")
       fetch(global.serverURL+'/auth', 
       {  method: 'POST',  
         headers: { Accept: 'application/json', 'Content-Type': 'application/json'  },
         body: JSON.stringify({ userId: email, password: password })}).then((response) => response.json())
         .then((json) => 
         {
-          console.log(json);
+          console.log("Login Response \n",json);
     
            if(json.status=="ok")
           {
     
             global.userObj=json;
-            
-            navigation.navigate('DashboardDrawerScreen', 
-            {
-              screen: 'Dashboard',
-              params: {userObj:json},
-            });
+            initTerra(json);
+            // navigation.navigate('DashboardDrawerScreen', 
+            // {
+            //   screen: 'Dashboard',
+            //   params: {userObj:json},
+            // });
           }
       else   
       { 
@@ -45,12 +48,33 @@ function Login({navigation}) {
     }
   }
   
+  const initTerra=(json)=>
+  {
+    console.log("Initializing Terra with {Email:"+json.email+", Password:"+password+"}");
+
+    TVLibNativeModule.configureTVDeviceLib(json.email, "iOS", password,
+    resp=>
+    {
+      if(resp)
+      {
+        navigation.navigate('DashboardDrawerScreen', 
+            {
+              screen: 'Dashboard',
+              params: {userObj:json},
+            });
+      }
+      else
+      {
+        console.log("Terra is not configured");
+      }
+    });
+  }
+  
   return (
     <SafeAreaView style={styles.container}>
     <View style={styles.container1}>
       <Image style={styles.image} source={require("../assets/icon.png")} />
  
-      {/* <StatusBar style="auto" /> */}
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}

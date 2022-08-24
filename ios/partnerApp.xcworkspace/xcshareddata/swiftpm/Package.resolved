@@ -5,8 +5,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tryterra/TerraiOS.git",
       "state" : {
-        "branch" : "master",
-        "revision" : "70e7f8c405f42e8768b5d08247ea7d7c149f2645"
+        "revision" : "b5a17a50a6166c798e887861969ad81594cabbd9",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "tvdevicelibios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tvipadmin/tvDeviceLibiOS",
+      "state" : {
+        "branch" : "tvSDKSandbox",
+        "revision" : "d7752e31d40663d51df6992a87a1da02915f0ef6"
       }
     }
   ],

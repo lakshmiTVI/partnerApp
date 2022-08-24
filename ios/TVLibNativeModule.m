@@ -10,13 +10,11 @@
 
  @interface  RCT_EXTERN_MODULE(TVLibNativeModule,NSObject)
 
-RCT_EXTERN_METHOD(addEvent:(NSString *)name location:(NSString *)location date:(nonnull NSNumber *)date      callback:(RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(configureTVDeviceLib:(NSString *)email platform:(NSString *)platform  password:(NSString *)password callback:(RCTResponseSenderBlock)callback)
 
-RCT_EXTERN_METHOD(loginUser:(NSString *)userName password:(NSString *)password callback:(RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(tvSDKUpdateDeviceList:(RCTResponseSenderBlock)callback)
 
-RCT_EXTERN_METHOD(greetings:(RCTResponseSenderBlock)callback)
-
-RCT_EXTERN_METHOD(configureTerra:(RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(readVitalReading)
 
 + (BOOL) requiresMainQueueSetup {
   return YES;

@@ -5,13 +5,13 @@ import {useIsFocused, useRoute,} from '@react-navigation/native';
 export default function Dashboard({ navigation }) {
 
     // ======================================== Variable DEclarations======================================
-    const [tempValue,setTValue]= useState("N/A");
-    const [bgValue,setBGValue]= useState("N/A");
-    const [bpValue,setBPValue]= useState("N/A");
-    const [htValue,setHTValue]= useState("N/A");
-    const [wtValue,setWTValue]= useState("N/A");
-    const [spo2Value,setSPO2Value]= useState("N/A");
-    const [pulseValue,setPULSEValue]= useState("N/A");
+    const [tempValue,setTValue]= useState([]);
+    const [bgValue,setBGValue]= useState([]);
+    const [bpValue,setBPValue]= useState([]);
+    const [htValue,setHTValue]= useState([]);
+    const [wtValue,setWTValue]= useState([]);
+    const [spo2Value,setSPO2Value]= useState([]);
+    const [pulseValue,setPULSEValue]= useState([]);
     const MINUTE_MS = 30000;
     const route=useRoute();
     var loginObj=route.params.userObj;
@@ -19,6 +19,7 @@ export default function Dashboard({ navigation }) {
 //    ================================================= Fuction Logic=====================================
 
 useEffect(() => {
+
     if(focus)
     {
     loadVitalData();
@@ -32,11 +33,21 @@ useEffect(() => {
 }
 }, [focus])
 
-
+const resetValues=()=>{
+    setTValue([]);
+    setWTValue([]);
+    setHTValue([]);
+    setBGValue([]);
+    setPULSEValue([]);
+    setSPO2Value([]);
+    setBPValue([]);
+}
 
  const loadVitalData=()=>
  {
-   captureVitalData(1);
+    console.log("Loading vitals of "+loginObj.username)
+    resetValues();
+    captureVitalData(1);
     captureVitalData(2);
     captureVitalData(3);
     captureVitalData(4);
@@ -47,25 +58,56 @@ useEffect(() => {
  }
 const  captureVitalData=(paramId)=>
 {
-    console.log(paramId);
     fetch(global.serverURL+'/getVitals?patientId='+loginObj.id+'&readingLimit=1&paramId='+paramId, 
       {  
         method: 'GET',  
         headers: { Accept: 'application/json', 'Content-Type': 'application/json','Authorization':"Bearer "+loginObj.token},})
         .then((response) => response.json()).then((json) => 
         {
+           
           if(json.status=="ok")
           {
-          if(paramId==1){setTValue(Math.round(json.data[0].paramvalue).toFixed(1)+" "+json.data[0].paramunit);console.log("called")}
-          else if(paramId==2){setWTValue(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
-          else if(paramId==3){setHTValue(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
-          else if(paramId==4){setBGValue(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
-          else if(paramId==5){setPULSEValue(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
-          else if(paramId==6){setSPO2Value(Math.round(json.data[0].paramvalue)+" "+json.data[0].paramunit);}
-          else if(paramId==8){setBPValue(json.data[0].paramvalue+" "+json.data[0].paramunit);}
+          if(paramId==1){setTValue(json.data);}
+          else if(paramId==2){setWTValue(json.data);}
+          else if(paramId==3){setHTValue(json.data);}
+          else if(paramId==4){setBGValue(json.data);}
+          else if(paramId==5){setPULSEValue(json.data);}
+          else if(paramId==6){setSPO2Value(json.data);}
+          else if(paramId==8){setBPValue(json.data);}
           }
       })
       .catch((error) => {console.error(error);})
+}
+
+function VitalvalidDisplay(props)
+{
+    const vitalData = props.vitalData[0];
+    const vitalName=props.vitalName;
+    if(props.vitalData.length>0)
+    {
+    return(
+        <View style={styles.row2}>
+        <Text style={styles.vitalTitle}>{vitalName}:{'\n'}<Text style={styles.smallFont}>({vitalData.readingDateandTime})</Text></Text>
+        {vitalData.parameterId==8?
+        <Text style={styles.vitalValue}>{vitalData.paramvalue} {vitalData.paramunit}</Text>:
+        (
+            vitalData.parameterId==1?
+            <Text style={styles.vitalValue}>{Math.round(vitalData.paramvalue).toFixed(1)} {vitalData.paramunit}</Text>:
+            <Text style={styles.vitalValue}>{Math.round(vitalData.paramvalue)} {vitalData.paramunit}</Text>
+        )
+        }
+        </View>
+    )
+    }
+    else
+    {
+        return(
+            <View style={styles.row2}>
+            <Text style={styles.vitalTitle}>{vitalName}:</Text>
+            <Text style={styles.vitalValue}>N/A</Text>
+            </View>
+        )
+    }
 }
 // ================================================ Frontend=======================================================
     return (
@@ -74,35 +116,14 @@ const  captureVitalData=(paramId)=>
             <View style={styles.row1}>
                 <Text style={styles.heading}>{loginObj.username}'s Vital Readings:</Text>
             </View>
-            
-            <View style={styles.row2}>
-            <Text style={styles.vitalTitle}>Blood Glucose:</Text>
-            <Text style={styles.vitalValue}>{bgValue}</Text>
-            </View>
-            <View style={styles.row2}>
-            <Text style={styles.vitalTitle}>Blood Pressure:</Text>
-            <Text style={styles.vitalValue}>{bpValue}</Text>
-            </View>
-            <View style={styles.row2}>
-            <Text style={styles.vitalTitle}>Temperature:</Text>
-            <Text style={styles.vitalValue}>{tempValue}</Text>
-            </View>
-            <View style={styles.row2}>
-            <Text style={styles.vitalTitle}>SpO2:</Text>
-            <Text style={styles.vitalValue}>{spo2Value}</Text>
-            </View>
-            <View style={styles.row2}>
-            <Text style={styles.vitalTitle}>Pulse Rate:</Text>
-            <Text style={styles.vitalValue}>{pulseValue}</Text>
-            </View>
-            <View style={styles.row2}>
-            <Text style={styles.vitalTitle}>Weight:</Text>
-            <Text style={styles.vitalValue}>{wtValue}</Text>
-            </View>
-            <View style={styles.row2}>
-            <Text style={styles.vitalTitle}>Height:</Text>
-            <Text style={styles.vitalValue}>{htValue}</Text>
-            </View>
+           
+            <VitalvalidDisplay  vitalName={"Blood Glucose"} vitalData={bgValue} />
+            <VitalvalidDisplay  vitalName={"Blood Pressure"} vitalData={bpValue} />
+            <VitalvalidDisplay  vitalName={"Temperature"} vitalData={tempValue} />
+            <VitalvalidDisplay  vitalName={"SPO2"} vitalData={spo2Value} />
+            <VitalvalidDisplay  vitalName={"Pulse"} vitalData={pulseValue} />
+            <VitalvalidDisplay  vitalName={"Weight"} vitalData={wtValue} />
+            <VitalvalidDisplay  vitalName={"Height"} vitalData={htValue} />
 
             <View style={styles.bottomRow} >
             <TouchableOpacity style={styles.deviceBtn} onPress={(loadVitalData)}>
@@ -130,12 +151,10 @@ const styles = StyleSheet.create({
     },
     row1:
     {
-       
         justifyContent:"center",
         backgroundColor:"#37aee5",
         padding:15,
         width:"100%",
-        
         borderRadius:2
     },
     row2:
@@ -150,8 +169,6 @@ const styles = StyleSheet.create({
     {
         fontSize:20,
         fontWeight:"bold"
-        
-
     }
     ,
     vitalTitle:
@@ -177,7 +194,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginTop: 40,
-        
         backgroundColor: "#366cdb",
       },
       deviceText:
@@ -193,6 +209,9 @@ const styles = StyleSheet.create({
             alignItems:"flex-end",
             justifyContent:"center" ,
       },
-
+      smallFont:
+      {
+        fontSize:12
+      }
       
 });

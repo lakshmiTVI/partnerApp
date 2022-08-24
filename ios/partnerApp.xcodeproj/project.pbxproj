@@ -16,7 +16,10 @@
 		723D85A928AFFFE0006696EF /* TVLibNativeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723D85A728AFFFE0006696EF /* TVLibNativeModule.swift */; };
 		723D85AB28B00004006696EF /* TVLibNativeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 723D85AA28B00004006696EF /* TVLibNativeModule.m */; };
 		723D85AC28B00004006696EF /* TVLibNativeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 723D85AA28B00004006696EF /* TVLibNativeModule.m */; };
-		723D85AF28B00171006696EF /* TerraiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 723D85AE28B00171006696EF /* TerraiOS */; };
+		72D5B1D328B607AB008AA4B4 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72D5B1D228B607AB008AA4B4 /* HealthKit.framework */; };
+		72D5B1D928B60E25008AA4B4 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D5B1D828B60E25008AA4B4 /* ActivityIndicator.swift */; };
+		72D5B1DA28B60E25008AA4B4 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D5B1D828B60E25008AA4B4 /* ActivityIndicator.swift */; };
+		72D5B1DE28B6108B008AA4B4 /* tvDeviceLibiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 72D5B1DD28B6108B008AA4B4 /* tvDeviceLibiOS */; };
 		7699B88040F8A987B510C191 /* libPods-partnerApp-partnerAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-partnerApp-partnerAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -50,6 +53,9 @@
 		723D85A628AFFFDF006696EF /* partnerAppTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "partnerAppTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		723D85A728AFFFE0006696EF /* TVLibNativeModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVLibNativeModule.swift; sourceTree = "<group>"; };
 		723D85AA28B00004006696EF /* TVLibNativeModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TVLibNativeModule.m; sourceTree = "<group>"; };
+		72D5B1D128B607AA008AA4B4 /* partnerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = partnerApp.entitlements; path = partnerApp/partnerApp.entitlements; sourceTree = "<group>"; };
+		72D5B1D228B607AB008AA4B4 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		72D5B1D828B60E25008AA4B4 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = partnerApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-partnerApp-partnerAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-partnerApp-partnerAppTests.release.xcconfig"; path = "Target Support Files/Pods-partnerApp-partnerAppTests/Pods-partnerApp-partnerAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -68,8 +74,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72D5B1D328B607AB008AA4B4 /* HealthKit.framework in Frameworks */,
+				72D5B1DE28B6108B008AA4B4 /* tvDeviceLibiOS in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-partnerApp.a in Frameworks */,
-				723D85AF28B00171006696EF /* TerraiOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +103,7 @@
 		13B07FAE1A68108700A75B9A /* partnerApp */ = {
 			isa = PBXGroup;
 			children = (
+				72D5B1D128B607AA008AA4B4 /* partnerApp.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -109,6 +117,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				72D5B1D228B607AB008AA4B4 /* HealthKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-partnerApp.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-partnerApp-partnerAppTests.a */,
@@ -126,6 +135,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				72D5B1D828B60E25008AA4B4 /* ActivityIndicator.swift */,
 				723D85AA28B00004006696EF /* TVLibNativeModule.m */,
 				723D85A728AFFFE0006696EF /* TVLibNativeModule.swift */,
 				13B07FAE1A68108700A75B9A /* partnerApp */,
@@ -205,7 +215,7 @@
 			);
 			name = partnerApp;
 			packageProductDependencies = (
-				723D85AE28B00171006696EF /* TerraiOS */,
+				72D5B1DD28B6108B008AA4B4 /* tvDeviceLibiOS */,
 			);
 			productName = partnerApp;
 			productReference = 13B07F961A680F5B00A75B9A /* partnerApp.app */;
@@ -239,7 +249,7 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				723D85AD28B00171006696EF /* XCRemoteSwiftPackageReference "TerraiOS" */,
+				72D5B1DC28B6108B008AA4B4 /* XCRemoteSwiftPackageReference "tvDeviceLibiOS" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -425,6 +435,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72D5B1DA28B60E25008AA4B4 /* ActivityIndicator.swift in Sources */,
 				723D85A928AFFFE0006696EF /* TVLibNativeModule.swift in Sources */,
 				723D85AC28B00004006696EF /* TVLibNativeModule.m in Sources */,
 				00E356F31AD99517003FC87E /* partnerAppTests.m in Sources */,
@@ -436,6 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				723D85AB28B00004006696EF /* TVLibNativeModule.m in Sources */,
+				72D5B1D928B60E25008AA4B4 /* ActivityIndicator.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				723D85A828AFFFE0006696EF /* TVLibNativeModule.swift in Sources */,
@@ -520,9 +532,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = partnerApp/partnerApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = partnerApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -548,8 +562,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = partnerApp/partnerApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = partnerApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -737,21 +753,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		723D85AD28B00171006696EF /* XCRemoteSwiftPackageReference "TerraiOS" */ = {
+		72D5B1DC28B6108B008AA4B4 /* XCRemoteSwiftPackageReference "tvDeviceLibiOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tryterra/TerraiOS.git";
+			repositoryURL = "https://github.com/tvipadmin/tvDeviceLibiOS";
 			requirement = {
-				branch = master;
+				branch = tvSDKSandbox;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		723D85AE28B00171006696EF /* TerraiOS */ = {
+		72D5B1DD28B6108B008AA4B4 /* tvDeviceLibiOS */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 723D85AD28B00171006696EF /* XCRemoteSwiftPackageReference "TerraiOS" */;
-			productName = TerraiOS;
+			package = 72D5B1DC28B6108B008AA4B4 /* XCRemoteSwiftPackageReference "tvDeviceLibiOS" */;
+			productName = tvDeviceLibiOS;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
