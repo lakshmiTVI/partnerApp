@@ -7,6 +7,7 @@ Committed by lakshmi on 25 Aug 2022
     - Passing the devices array to tvlib
     - Disabled button if no devices found
     - Logging the response from the TVLib after update
+    - Changed the button name to Update Device List in TVDeviceLib
 - TVLibNativeModule.swift
     - Recieving devices list from react
     - Sending back the resp list to react

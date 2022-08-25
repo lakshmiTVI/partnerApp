@@ -66,7 +66,7 @@ else
 
         <View  style={styles.bottomRow}>
         <TouchableOpacity style={deviceDetailList.length>0? styles.terraBtnActive:styles.terraBtnInActive} onPress={deviceDetailList.length>0?updateDeviceList:()=>{}}>
-        <Text style={styles.deviceText}  >Update Device List To TVLib</Text>
+        <Text style={styles.deviceText}  >Update Device List in TVDeviceLib</Text>
         </TouchableOpacity>
         </View>
 

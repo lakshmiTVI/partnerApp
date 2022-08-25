@@ -47,21 +47,28 @@ public class TVLibNativeModule:NSObject{
     print(deviceArr);
     var deviceList1 = [DeviceModel]();
   
-    for devices in deviceArr {
-     
-     
-      print(devices)
+    for device in deviceArr {
+      print(device)
       
-//      var model=DeviceModel(manufacturerName: devices.make, modelConnectivity: "WIFI", deviceName: "BPM Connect", deviceType: "BLOODPRESSURE", deviceSerialNo: devices.serialnumber, modelName: "WithingsM1", modelCode: "WithingsM12", modelMaxSupportedUsers: 1, deviceTimezone: "UTC", deviceIPAddress: "WithingsM1Device11", deviceMAC: "WithingsM1DeviceMAC11", deviceSSID: "PPOS12344", deviceBluetoothMAC: "WithingsM1DeviceBluetoothMAC11", deviceCellularNumber: "1234567889");
-//
-//      deviceList1.append(model);
+      let deviceFinal=device as! NSDictionary;
+       let make = (deviceFinal["make"] as? String) ?? ""
+      let model = (deviceFinal["model"] as? String) ?? ""
+//      let deviceId = (deviceFinal["deviceId"] as? Int) ?? 0
+      let serialnumber = (deviceFinal["serialnumber"] as? String) ?? ""
+//      let description = (deviceFinal["description"] as? String) ?? ""
+      let type = (deviceFinal["type"] as? String) ?? ""
+      let name = (deviceFinal["name"] as? String) ?? ""
+      
+      var modelObj=DeviceModel(manufacturerName: make, modelConnectivity: "WIFI", deviceName: name, deviceType: type, deviceSerialNo: serialnumber, modelName: model, modelCode: "WithingsM12", modelMaxSupportedUsers: 1, deviceTimezone: "UTC", deviceIPAddress: "WithingsM1Device11", deviceMAC: "WithingsM1DeviceMAC11", deviceSSID: "PPOS12344", deviceBluetoothMAC: "WithingsM1DeviceBluetoothMAC11", deviceCellularNumber: "1234567889");
+
+      deviceList1.append(modelObj);
       
     }
     
-    let deviceList=[DeviceModel(manufacturerName: "Withings", modelConnectivity: "WIFI", deviceName: "BPM Connect", deviceType: "BLOODPRESSURE", deviceSerialNo: "Withings-BP-123456", modelName: "WithingsM1", modelCode: "WithingsM12", modelMaxSupportedUsers: 1, deviceTimezone: "UTC", deviceIPAddress: "WithingsM1Device11", deviceMAC: "WithingsM1DeviceMAC11", deviceSSID: "PPOS12344", deviceBluetoothMAC: "WithingsM1DeviceBluetoothMAC11", deviceCellularNumber: "1234567889")]
+//    let deviceList=[DeviceModel(manufacturerName: "Withings", modelConnectivity: "WIFI", deviceName: "BPM Connect", deviceType: "BLOODPRESSURE", deviceSerialNo: "Withings-BP-123456", modelName: "WithingsM1", modelCode: "WithingsM12", modelMaxSupportedUsers: 1, deviceTimezone: "UTC", deviceIPAddress: "WithingsM1Device11", deviceMAC: "WithingsM1DeviceMAC11", deviceSSID: "PPOS12344", deviceBluetoothMAC: "WithingsM1DeviceBluetoothMAC11", deviceCellularNumber: "1234567889")]
     
     if let configTemp = TVLibNativeModule.tvConfig{
-      configTemp.updateDevicesList(deviceList: deviceList) { deviceData in
+      configTemp.updateDevicesList(deviceList: deviceList1) { deviceData in
         if let deviceInfo = deviceData{
           print("Partner App tvconfig updateDevicesList: \(deviceInfo)")
           
