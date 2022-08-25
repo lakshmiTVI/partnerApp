@@ -87,8 +87,8 @@ const  captureVitalData=(paramId)=>
           else if(paramId==5){setPULSEValue(json.data);}
           else if(paramId==6){setSPO2Value(json.data);}
           else if(paramId==8){setBPValue(json.data);}
-          else if(paramId==9){setbmiValue(json.data);}
-          else if(paramId==11){setStepValue(json.data);}
+          else if(paramId==11){setbmiValue(json.data);}
+          else if(paramId==9){setStepValue(json.data);}
           else if(paramId==12){setCyclingValue(json.data);}
           
           }

@@ -2,6 +2,7 @@ Committed by lakshmi on 25 Aug 2022
 - Dashboard
     - Scroll down to reload readings
     - Display of step count, cycling and bmi
+    - Corrected BMI and Step count values
 - Device List
     - Changing the name of button
     - Passing the devices array to tvlib
