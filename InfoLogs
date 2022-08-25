@@ -14,5 +14,7 @@ Committed by lakshmi on 25 Aug 2022
 - TVLibNativeModule.swift
     - Recieving devices list from react
     - Sending back the resp list to react
+- Terr.js
+    - Added note for completion reading
 
 

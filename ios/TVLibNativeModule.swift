@@ -48,14 +48,11 @@ public class TVLibNativeModule:NSObject{
     var deviceList1 = [DeviceModel]();
   
     for device in deviceArr {
-      print(device)
-      
+          
       let deviceFinal=device as! NSDictionary;
-       let make = (deviceFinal["make"] as? String) ?? ""
+      let make = (deviceFinal["make"] as? String) ?? ""
       let model = (deviceFinal["model"] as? String) ?? ""
-//      let deviceId = (deviceFinal["deviceId"] as? Int) ?? 0
       let serialnumber = (deviceFinal["serialnumber"] as? String) ?? ""
-//      let description = (deviceFinal["description"] as? String) ?? ""
       let type = (deviceFinal["type"] as? String) ?? ""
       let name = (deviceFinal["name"] as? String) ?? ""
       
@@ -64,8 +61,6 @@ public class TVLibNativeModule:NSObject{
       deviceList1.append(modelObj);
       
     }
-    
-//    let deviceList=[DeviceModel(manufacturerName: "Withings", modelConnectivity: "WIFI", deviceName: "BPM Connect", deviceType: "BLOODPRESSURE", deviceSerialNo: "Withings-BP-123456", modelName: "WithingsM1", modelCode: "WithingsM12", modelMaxSupportedUsers: 1, deviceTimezone: "UTC", deviceIPAddress: "WithingsM1Device11", deviceMAC: "WithingsM1DeviceMAC11", deviceSSID: "PPOS12344", deviceBluetoothMAC: "WithingsM1DeviceBluetoothMAC11", deviceCellularNumber: "1234567889")]
     
     if let configTemp = TVLibNativeModule.tvConfig{
       configTemp.updateDevicesList(deviceList: deviceList1) { deviceData in

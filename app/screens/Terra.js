@@ -2,11 +2,11 @@
 import React from 'react';
 import { SafeAreaView,StyleSheet,View,Text,StatusBar,TouchableOpacity,Alert } from 'react-native';
 import TVLibNativeModule from "../services/TVLibNativeModule";
-import {useState,useEffect} from 'react';
 
 function Terra({navigation}) {
 
-    
+
+
 const takeVitalReadings=()=>
 {
     console.log("Taking vital reading from TV Lib");
@@ -26,7 +26,7 @@ return (
         </TouchableOpacity>
         </View>
 
-
+        <View style={styles.bottomRow}><Text style={styles.titleText}  >[Note: After Completion of vital reading you can view the results in Dashboard]</Text></View>
     </SafeAreaView>
     
 );
@@ -69,5 +69,15 @@ const styles = StyleSheet.create({
             alignItems:"flex-end",
             justifyContent:"center" ,
       },
+      titleText:
+      {
+        fontSize:18,
+        alignItems: "center",
+        justifyContent: "center",
+        color:"grey",
+        paddingHorizontal:20,
+        top:20
+      },
+      
 })
 export default Terra;
