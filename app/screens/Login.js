@@ -28,7 +28,7 @@ function Login({navigation}) {
           {
     
             global.userObj=json;
-            initTerra(json);
+            initTVDeviceLib(json);
             // navigation.navigate('DashboardDrawerScreen', 
             // {
             //   screen: 'Dashboard',
@@ -48,11 +48,11 @@ function Login({navigation}) {
     }
   }
   
-  const initTerra=(json)=>
+  const initTVDeviceLib=(json)=>
   {
-    console.log("Initializing Terra with {Email:"+json.email+", Password:"+password+"}");
+    console.log("Initializing TVDeviceLib with {Email:"+json.email+", Password:"+password+"}");
 
-    TVLibNativeModule.configureTVDeviceLib(json.email, "iOS", password,
+    TVLibNativeModule.initTVDeviceLib(json.email, "iOS", password,
     resp=>
     {
       if(resp)
@@ -65,7 +65,7 @@ function Login({navigation}) {
       }
       else
       {
-        console.log("Terra is not configured");
+        console.log("initTVDeviceLib is not configured");
       }
     });
   }

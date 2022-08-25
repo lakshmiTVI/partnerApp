@@ -17,8 +17,8 @@ function DeviceList(props) {
   useEffect(()=>{
       if(focus)
       {
-        console.log("Inside DeviceList Component");
         loginObj=global.userObj;
+        console.log("Inside DeviceList Component");
         setValue([]);
         loadDeviceList();
       }
@@ -50,13 +50,13 @@ const loadDeviceList=()=>
 const updateDeviceList=()=>{
 if(deviceDetailList.length>0)
 {
-  console.log("Updating TVLib device list");
+  console.log("Updating TVDeviceLib ");
   toggleAnimating(true);
-  TVLibNativeModule.tvSDKUpdateDeviceList(deviceDetailList,resp=>{toggleAnimating(false);console.log("Response from the TVLib after device update \n",JSON.parse(resp[1]));Alert.alert(resp[0])});
+  TVLibNativeModule.tvDeviceLibUpdateDeviceList(deviceDetailList,resp=>{toggleAnimating(false);console.log("Response from the TVDeviceLib after device update \n",JSON.parse(resp[1]));Alert.alert(resp[0])});
 }
 else
 {
-  Alert.alert("No Devices found to update to TVLib");
+  Alert.alert("No Devices found to update to TVDeviceLib");
 }
 }
 

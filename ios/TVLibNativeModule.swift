@@ -13,42 +13,48 @@ import tvDeviceLibiOS
 @objc(TVLibNativeModule)
 public class TVLibNativeModule:NSObject{
   
+  @objc enum VitalDeviceType:Int {
+    case freestyle
+    case dexcom
+  }
+  let deviceType = VitalDeviceType.freestyle
+  
   @objc var terraConfigResp=false;
   
   
   static var tvConfig:tvDeviceLibConfig?
   
   //MARK: TVDeviceLib Config Methods
-  @objc func configureTVDeviceLib(_ email:String, platform:String, password:String,callback:RCTResponseSenderBlock){
-    print("configureTVDeviceLib Start")
-
+  @objc func initTVDeviceLib(_ email:String, platform:String, password:String,callback:RCTResponseSenderBlock){
+    print("initTVDeviceLib Start")
+    
     ActivityIndicator.sharedInstance.showActivityIndicator()
     TVLibNativeModule.tvConfig = tvDeviceLibConfig.init(email: email, platform: platform, password: password) { userModel in
-      print("configureTVDeviceLib Done")
-          print("Partner App tvconfigs userModel: \(userModel)")
+      print("initTVDeviceLib Done")
+      print("Partner App initTVDeviceLib userModel: \(userModel)")
       self.terraConfigResp=true;
-          ActivityIndicator.sharedInstance.hideActivityIndicator()
+      ActivityIndicator.sharedInstance.hideActivityIndicator()
       
-      } failure: { error in
-          print("Partner App tvconfig error: \(error)")
-          ActivityIndicator.sharedInstance.hideActivityIndicator()
-      }
+    } failure: { error in
+      print("Partner App initTVDeviceLib error: \(error)")
+      ActivityIndicator.sharedInstance.hideActivityIndicator()
+    }
     sleep(3)
     
-      callback([self.terraConfigResp])
+    callback([self.terraConfigResp])
     
   }
   
   
   @objc var updateDeviceListResp="Not updated";
   @objc var respList="";
-  @objc func tvSDKUpdateDeviceList(_ deviceArr:NSArray, callback:RCTResponseSenderBlock){
-     
+  @objc func tvDeviceLibUpdateDeviceList(_ deviceArr:NSArray, callback:RCTResponseSenderBlock){
+    
     print(deviceArr);
     var deviceList1 = [DeviceModel]();
-  
+    
     for device in deviceArr {
-          
+      
       let deviceFinal=device as! NSDictionary;
       let make = (deviceFinal["make"] as? String) ?? ""
       let model = (deviceFinal["model"] as? String) ?? ""
@@ -57,7 +63,7 @@ public class TVLibNativeModule:NSObject{
       let name = (deviceFinal["name"] as? String) ?? ""
       
       var modelObj=DeviceModel(manufacturerName: make, modelConnectivity: "WIFI", deviceName: name, deviceType: type, deviceSerialNo: serialnumber, modelName: model, modelCode: "WithingsM12", modelMaxSupportedUsers: 1, deviceTimezone: "UTC", deviceIPAddress: "WithingsM1Device11", deviceMAC: "WithingsM1DeviceMAC11", deviceSSID: "PPOS12344", deviceBluetoothMAC: "WithingsM1DeviceBluetoothMAC11", deviceCellularNumber: "1234567889");
-
+      
       deviceList1.append(modelObj);
       
     }
@@ -80,14 +86,22 @@ public class TVLibNativeModule:NSObject{
     }
     
     sleep(3)
-  
+    
     print(self.respList);
     callback([[self.updateDeviceListResp , self.respList]]);
   }
   
-  @objc func readVitalReading(){
+  
+  @objc func readVitalReading() {
     
-    TVLibNativeModule.tvConfig?.scanFreestyleDevice()
+    switch(deviceType)
+    {
+    case .freestyle:
+      TVLibNativeModule.tvConfig?.scanFreestyleDevice()
+    case .dexcom:
+//      TVLibNativeModule.tvConfig?.scanDexcom()
+        print("Dexcom support coming soon...")
+    }
   }
   
   

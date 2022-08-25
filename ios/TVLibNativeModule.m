@@ -10,9 +10,9 @@
 
  @interface  RCT_EXTERN_MODULE(TVLibNativeModule,NSObject)
 
-RCT_EXTERN_METHOD(configureTVDeviceLib:(NSString *)email platform:(NSString *)platform  password:(NSString *)password callback:(RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(initTVDeviceLib:(NSString *)email platform:(NSString *)platform  password:(NSString *)password callback:(RCTResponseSenderBlock)callback)
 
-RCT_EXTERN_METHOD(tvSDKUpdateDeviceList:(NSArray *)deviceArr callback:(RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(tvDeviceLibUpdateDeviceList:(NSArray *)deviceArr callback:(RCTResponseSenderBlock)callback)
 
 RCT_EXTERN_METHOD(readVitalReading)
 
