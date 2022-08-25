@@ -3,6 +3,8 @@ Committed by lakshmi on 25 Aug 2022
     - Scroll down to reload readings
     - Display of step count, cycling and bmi
     - Corrected BMI and Step count values
+    - Removed display of cycling
+    - Changed unit of step to steps
 - Device List
     - Changing the name of button
     - Passing the devices array to tvlib

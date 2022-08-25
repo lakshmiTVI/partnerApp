@@ -106,12 +106,12 @@ function VitalvalidDisplay(props)
     return(
         <View style={styles.row2}>
         <Text style={styles.vitalTitle}>{vitalName}:{'\n'}<Text style={styles.smallFont}>({vitalData.readingDateandTime})</Text></Text>
-        {vitalData.parameterId==8 || vitalData.parameterId==9 || vitalData.parameterId==11 || vitalData.parameterId==12?
+        {vitalData.parameterId==8 || vitalData.parameterId==11?
         <Text style={styles.vitalValue}>{vitalData.paramvalue} {vitalData.paramunit}</Text>:
         (
             vitalData.parameterId==1?
             <Text style={styles.vitalValue}>{Math.round(vitalData.paramvalue).toFixed(1)} {vitalData.paramunit}</Text>:
-            <Text style={styles.vitalValue}>{Math.round(vitalData.paramvalue)} {vitalData.paramunit}</Text>
+            <Text style={styles.vitalValue}>{Math.round(vitalData.paramvalue)} {vitalData.parameterId=="9"?vitalData.paramunit+"s":vitalData.paramunit}</Text>
         )
         }
         </View>
@@ -151,7 +151,7 @@ function VitalvalidDisplay(props)
             <VitalvalidDisplay  vitalName={"Height"} vitalData={htValue} />
             <VitalvalidDisplay  vitalName={"BMI"} vitalData={bmiValue} />
             <VitalvalidDisplay  vitalName={"Stepcount"} vitalData={stepValue} />
-            <VitalvalidDisplay  vitalName={"Cycling"} vitalData={cyclingValue} />
+            {/* <VitalvalidDisplay  vitalName={"Cycling"} vitalData={cyclingValue} /> */}
 
             </ScrollView>
             </View>
