@@ -3,8 +3,14 @@ Steps to run react native app on ios simulator (Ref Link for getting started wit
 
 Step 1: Run below commands to install react-native in terminal
 
+If running for the first time run below commands
+
         npm i -g react-native-cli
         npm i -g react-native
+
+If evnvironment already set run  below command, it will install the node modules
+
+npm install
 
 Step 2: Install Xcode from App store ( Installing Xcode will also install the iOS Simulator and all the necessary tools to build your iOS app.)
 

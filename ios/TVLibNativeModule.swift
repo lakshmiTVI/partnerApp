@@ -39,16 +39,34 @@ public class TVLibNativeModule:NSObject{
     
   }
   
+  
   @objc var updateDeviceListResp="Not updated";
-  @objc func tvSDKUpdateDeviceList(_ callback:RCTResponseSenderBlock){
+  @objc var respList="";
+  @objc func tvSDKUpdateDeviceList(_ deviceArr:NSArray, callback:RCTResponseSenderBlock){
      
+    print(deviceArr);
+    var deviceList1 = [DeviceModel]();
+  
+    for devices in deviceArr {
+     
+     
+      print(devices)
+      
+//      var model=DeviceModel(manufacturerName: devices.make, modelConnectivity: "WIFI", deviceName: "BPM Connect", deviceType: "BLOODPRESSURE", deviceSerialNo: devices.serialnumber, modelName: "WithingsM1", modelCode: "WithingsM12", modelMaxSupportedUsers: 1, deviceTimezone: "UTC", deviceIPAddress: "WithingsM1Device11", deviceMAC: "WithingsM1DeviceMAC11", deviceSSID: "PPOS12344", deviceBluetoothMAC: "WithingsM1DeviceBluetoothMAC11", deviceCellularNumber: "1234567889");
+//
+//      deviceList1.append(model);
+      
+    }
     
-    let deviceList = [DeviceModel(manufacturerName: "Withings", modelConnectivity: "WIFI", deviceName: "BPM Connect", deviceType: "BLOODPRESSURE", deviceSerialNo: "Withings-BP-123456", modelName: "WithingsM1", modelCode: "WithingsM12", modelMaxSupportedUsers: 1, deviceTimezone: "UTC", deviceIPAddress: "WithingsM1Device11", deviceMAC: "WithingsM1DeviceMAC11", deviceSSID: "PPOS12344", deviceBluetoothMAC: "WithingsM1DeviceBluetoothMAC11", deviceCellularNumber: "1234567889")]
+    let deviceList=[DeviceModel(manufacturerName: "Withings", modelConnectivity: "WIFI", deviceName: "BPM Connect", deviceType: "BLOODPRESSURE", deviceSerialNo: "Withings-BP-123456", modelName: "WithingsM1", modelCode: "WithingsM12", modelMaxSupportedUsers: 1, deviceTimezone: "UTC", deviceIPAddress: "WithingsM1Device11", deviceMAC: "WithingsM1DeviceMAC11", deviceSSID: "PPOS12344", deviceBluetoothMAC: "WithingsM1DeviceBluetoothMAC11", deviceCellularNumber: "1234567889")]
+    
     if let configTemp = TVLibNativeModule.tvConfig{
       configTemp.updateDevicesList(deviceList: deviceList) { deviceData in
         if let deviceInfo = deviceData{
           print("Partner App tvconfig updateDevicesList: \(deviceInfo)")
+          
           self.updateDeviceListResp="Updated Successfully";
+          self.respList=deviceInfo;
         }else{
           print("Partner App tvconfig updateDevicesList: No devices available")
           self.updateDeviceListResp="No devices available";
@@ -61,10 +79,12 @@ public class TVLibNativeModule:NSObject{
     
     sleep(3)
   
-    callback([self.updateDeviceListResp]);
+    print(self.respList);
+    callback([[self.updateDeviceListResp , self.respList]]);
   }
   
   @objc func readVitalReading(){
+    
     TVLibNativeModule.tvConfig?.scanFreestyleDevice()
   }
   

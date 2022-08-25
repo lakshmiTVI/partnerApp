@@ -1,0 +1,14 @@
+Committed by lakshmi on 25 Aug 2022
+- Dashboard
+    - Scroll down to reload readings
+    - Display of step count, cycling and bmi
+- Device List
+    - Changing the name of button
+    - Passing the devices array to tvlib
+    - Disabled button if no devices found
+    - Logging the response from the TVLib after update
+- TVLibNativeModule.swift
+    - Recieving devices list from react
+    - Sending back the resp list to react
+
+

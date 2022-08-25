@@ -12,7 +12,7 @@
 
 RCT_EXTERN_METHOD(configureTVDeviceLib:(NSString *)email platform:(NSString *)platform  password:(NSString *)password callback:(RCTResponseSenderBlock)callback)
 
-RCT_EXTERN_METHOD(tvSDKUpdateDeviceList:(RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(tvSDKUpdateDeviceList:(NSArray *)deviceArr callback:(RCTResponseSenderBlock)callback)
 
 RCT_EXTERN_METHOD(readVitalReading)
 

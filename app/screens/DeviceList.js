@@ -17,6 +17,8 @@ function DeviceList(props) {
   useEffect(()=>{
       if(focus)
       {
+        console.log("Inside DeviceList Component");
+        loginObj=global.userObj;
         setValue([]);
         loadDeviceList();
       }
@@ -46,10 +48,16 @@ const loadDeviceList=()=>
 }
 
 const updateDeviceList=()=>{
-
+if(deviceDetailList.length>0)
+{
   console.log("Updating TVLib device list");
   toggleAnimating(true);
-  TVLibNativeModule.tvSDKUpdateDeviceList(resp=>{toggleAnimating(false);Alert.alert(resp)});
+  TVLibNativeModule.tvSDKUpdateDeviceList(deviceDetailList,resp=>{toggleAnimating(false);console.log("Response from the TVLib after device update \n",JSON.parse(resp[1]));Alert.alert(resp[0])});
+}
+else
+{
+  Alert.alert("No Devices found to update to TVLib");
+}
 }
 
     return (
@@ -57,8 +65,8 @@ const updateDeviceList=()=>{
         <SafeAreaView style={styles.container}>
 
         <View  style={styles.bottomRow}>
-        <TouchableOpacity style={styles.terraBtn} onPress={updateDeviceList}>
-        <Text style={styles.deviceText}  >Update TVLib Device List</Text>
+        <TouchableOpacity style={deviceDetailList.length>0? styles.terraBtnActive:styles.terraBtnInActive} onPress={deviceDetailList.length>0?updateDeviceList:()=>{}}>
+        <Text style={styles.deviceText}  >Update Device List To TVLib</Text>
         </TouchableOpacity>
         </View>
 
@@ -73,7 +81,7 @@ const updateDeviceList=()=>{
               {item.description}
               </Text>
             </View>
-        )}/>:<View style={styles.bottomRow}><Text style={styles.titleText}  >No Devices Found</Text></View>}
+        )}/>:<View style={styles.bottomRow}><Text style={styles.titleText}  >No Devices found to update to TVLib</Text></View>}
       </SafeAreaView>
     )
 }
@@ -95,7 +103,7 @@ const styles = StyleSheet.create({
       title: {
         fontSize: 15,
       },
-      terraBtn: {
+      terraBtnActive: {
         width: "80%",
         borderRadius: 10,
         height: 50,
@@ -104,6 +112,16 @@ const styles = StyleSheet.create({
         marginTop: 40,
         
         backgroundColor: "#366cdb",
+      },
+      terraBtnInActive: {
+        width: "80%",
+        borderRadius: 10,
+        height: 50,
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 40,
+        
+        backgroundColor: "grey",
       },
       deviceText:
       {
